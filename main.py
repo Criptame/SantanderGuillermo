@@ -1,4 +1,4 @@
-import random
+import csv
 
 clientes = [
     "Maria Carmen",
@@ -12,3 +12,14 @@ clientes = [
     "Simba Scar",
     "Jose Antonio",
     ]
+
+with open('datos.csv', mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(clientes)
+    
+print("Archivo CSV 'datos.csv' guardado correctamente")
+
+with open('datos.csv', mode='r', newline='') as file:
+    reader = csv.reader(file)
+    row = list(reader)
+
