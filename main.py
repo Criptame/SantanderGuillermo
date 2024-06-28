@@ -17,15 +17,19 @@ clientes = [
 ]
 
 print("Elija una opcion")
-print("Opcion 1- Ver saldo De Clientes")
-print("Opcion 2- Hornear de mayor a menor")
-print("Opcion 3- Hordenar de menor a mayor")
-print("Opcion 4- Salir del programa")
+print("Opcion 1- Dar dinero a Clientes con monto alazar")
+print("Opcion 2- Ver saldo De Clientes")
+print("Opcion 3- Asignar saldo a Todos los clientes")
+print("Opcion 4- Hordenar de mayor a menor")
+print("Opcion 5- Hordenar de menor a mayor")
+print("Opcion 6- Salir del programa")
 
 def generardor_de_saldos_Aleatorios():
     return [random.randint(100, 10000000)]
 
 def Definir_Saldo(saldos):
+    saldos = [generardor_de_saldos_Aleatorios() for _ in range(len(clientes)-1)]
+    clientes[1][1:] = saldos[0]
     Rango = {"Menor": (1000, 30000), "Regular": (35000, 100000), "Mayor": (150000, 10000000)}
     clasificar = {"Menor": [], "Regular": [], "Mayor": []}
     for saldo in saldos:
@@ -49,19 +53,38 @@ clientes[1][1:] = saldos[0]
 def ver_saldo_clientes(clientes):
     for cliente in clientes:
         print(f"Nombre: {cliente[0]}, Saldo: ${''.join(map(str, cliente[1:]))}")
-        
-#Generar las opc
+
+def ver_cliente_especifico(clientes, nombre):
+    for cliente in clientes:
+        if cliente[0] == nombre:
+            print(f"Nombre: {cliente[0]}, Saldo: ${''.join(map(str, cliente[1:]))}")
+            return
+
+#Generar las opciones
 
 while True:
     opcion = int(input())
     if opcion == 1:
-        ver_saldo_clientes(clientes)
+        nombre_cliente = input("Ingrese el nombre del cliente: ")
+        ver_cliente_especifico(clientes, nombre_cliente)
     elif opcion == 2:
+        ver_saldo_clientes(clientes)
+    elif opcion == 3:
+        saldo_nuevo = int(input("Ingrese el nuevo saldo: "))
+        nombre_cliente = input("Ingrese el nombre del cliente: ")
+        for cliente in clientes:
+            if cliente[0] == nombre_cliente:
+                cliente[1:] = [saldo_nuevo]
+                print(f"El saldo de {nombre_cliente} se ha actualizado correctamente.")
+                break
+        else:
+            print(f"No se encontró al cliente {nombre_cliente}")
+    elif opcion == 4:
         saldos_clasificados = Definir_Saldo(saldos[0])
         print("Clientes por rango de saldo:")
         for rango in saldos_clasificados:
             print(f"{rango}: {len(saldos_clasificados[rango])}")
-    elif opcion == 3:
+    elif opcion == 5:
         saldos_clasificados = Definir_Saldo(saldos[0])
         saldos_ordenados = sorted(saldos_clasificados["Menor"] + saldos_clasificados["Regular"] + saldos_clasificados["Mayor"], reverse=True)
         print("Clientes ordenados por saldo (mayor a menor):")
@@ -69,10 +92,13 @@ while True:
             for cliente in clientes:
                 if cliente[1:] == [saldo]:
                     print(f"Nombre: {cliente[0]}, Saldo: ${''.join(map(str, cliente[1:]))}")
-    elif opcion == 4:
+    elif opcion == 6:
         print("Me despido de usted , tenga buen dia")
-    break
-        
+        break
+    else:
+        print("Opción no válida. Intente de nuevo.")
+
+# Additional code that is executed only once after the user has chosen their option
 def ver_cliente_especifico(clientes, nombre):
     for cliente in clientes:
         if cliente[0] == nombre:
