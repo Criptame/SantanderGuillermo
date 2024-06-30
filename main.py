@@ -76,7 +76,6 @@ while True:
             if cliente[0] == nombre_cliente:
                 cliente[1:] = [saldo_nuevo]
                 print(f"El saldo de {nombre_cliente} se ha actualizado correctamente.")
-                break
         else:
             print(f"No se encontró al cliente {nombre_cliente}")
     elif opcion == 4:
